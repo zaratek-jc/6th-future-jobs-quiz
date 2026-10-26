@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listening & Reading Comprehension: Future Jobs & AI</title>
+  <style>
+    :root {
+      --oxford-blue: #002147;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #cbd5e1;
+      --success: #16a34a;
+      --error: #dc2626;
+      --word-chip-bg: #e0f2fe;
+      --word-chip-border: #0284c7;
+      --word-chip-text: #0369a1;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Header Banner */
+    .header-banner {
+      background-color: var(--oxford-blue);
+      color: #ffffff;
+      width: 100%;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      margin-bottom: 24px;
+    }
+
+    .header-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .header-subtitle {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #93c5fd;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 900px;
+      width: calc(100% - 32px);
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    }
+
+    .instruction {
+      font-size: 1.05rem;
+      color: #475569;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 20px;
+      background: #f1f5f9;
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+    }
+
+    /* Student Info Panel */
+    .info-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      align-items: center;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-group label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+
+    .input-group input, .input-group select {
+      padding: 9px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+      background-color: #ffffff;
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      border-color: var(--primary);
+    }
+
+    .timer-display {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: #eff6ff;
+      padding: 10px 12px;
+      border-radius: 6px;
+      text-align: center;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Audio Player */
+    .audio-player-card {
+      background: #1e293b;
+      color: white;
+      padding: 18px 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .audio-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+
+    .audio-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .speed-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+    }
+
+    .speed-label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .speed-btn {
+      background: transparent;
+      color: #cbd5e1;
+      border: 1px solid #475569;
+      padding: 4px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .speed-btn:hover {
+      background: #334155;
+      color: white;
+    }
+
+    .speed-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Dialogue Section */
+    .dialogue-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .dialogue-line {
+      margin-bottom: 12px;
+    }
+
+    .speaker {
+      font-weight: 800;
+      color: var(--oxford-blue);
+      margin-right: 6px;
+    }
+
+    /* Quiz Section */
+    .quiz-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .question-block {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .question-block:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .question-text {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+      color: var(--oxford-blue);
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .option-label:hover {
+      background: #f1f5f9;
+      border-color: var(--primary);
+    }
+
+    .option-label input {
+      accent-color: var(--primary);
+    }
+
+    .justification-box {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .justification-box.visible {
+      display: block;
+    }
+
+    .justification-box.correct {
+      background-color: #dcfce7;
+      border: 1px solid var(--success);
+      color: #14532d;
+    }
+
+    .justification-box.incorrect {
+      background-color: #fee2e2;
+      border: 1px solid var(--error);
+      color: #7f1d1d;
+    }
+
+    /* Action Buttons */
+    .action-bar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #64748b;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #15803d;
+    }
+
+    /* Modal Results */
+    .results-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+
+    .results-content {
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+
+    .score-badge {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 16px 0;
+    }
+
+    .motivation-msg {
+      font-size: 1.1rem;
+      color: #334155;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .header-title { font-size: 1.6rem; }
+      .header-subtitle { font-size: 1.05rem; }
+      .container { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header-banner">
+  <h1 class="header-title">COLEGIO SAN IGNACIO</h1>
+  <div class="header-subtitle">6th grade Reading & Listening Comprehension</div>
+</header>
+
+<div class="container">
+  <div class="instruction">
+    🎧 Listen to or read the dialogue below, then answer the 7 reading comprehension questions.
+  </div>
+
+  <!-- Student Info -->
+  <div class="info-card">
+    <div class="input-group">
+      <label for="student-course">Curso</label>
+      <select id="student-course">
+        <option value="">-- Selecciona Curso --</option>
+        <option value="6° Básico A">6° Básico A</option>
+        <option value="6° Básico B">6° Básico B</option>
+        <option value="6° Básico C">6° Básico C</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="student-name">Estudiante</label>
+      <select id="student-name" disabled>
+        <option value="">-- Primero selecciona curso --</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label for="activity-date">Fecha</label>
+      <input type="date" id="activity-date">
+    </div>
+    <div class="timer-display" id="timer">Time: 00:00</div>
+  </div>
+
+  <!-- Audio Player -->
+  <div class="audio-player-card">
+    <div class="audio-controls">
+      <button class="audio-btn" id="play-btn">▶ Play</button>
+      <button class="audio-btn" id="pause-btn">⏸ Pause</button>
+      <button class="audio-btn" id="repeat-btn">🔄 Replay</button>
+
+      <div class="speed-controls">
+        <span class="speed-label">Speed:</span>
+        <button class="speed-btn active" data-speed="1.0">1.0x</button>
+        <button class="speed-btn" data-speed="0.8">0.8x</button>
+        <button class="speed-btn" data-speed="0.6">0.6x</button>
+      </div>
+
+      <span id="audio-status" style="font-size: 0.88rem; color: #cbd5e1;">Ready to listen</span>
+    </div>
+    <audio id="html-audio" src="future jobs.mp3" preload="auto"></audio>
+  </div>
+
+  <!-- Reference Dialogue -->
+  <div class="dialogue-card">
+    <div class="dialogue-line"><span class="speaker">Lisa:</span> Hi, Ronald. I was reading an amazing article about future jobs and Artificial Intelligence. Do you think AI will replace teachers in our classrooms?</div>
+    <div class="dialogue-line"><span class="speaker">Ronald:</span> Hi, Lisa. No, human teachers won't vanish; they will use AI tools to teach better.</div>
+    <div class="dialogue-line"><span class="speaker">Lisa:</span> The article adressed something about medicine. Will doctors lose their jobs when robots perform surgeries?</div>
+    <div class="dialogue-line"><span class="speaker">Ronald:</span> That's interesting. Advanced robots will assist doctors, but they won't make medical decisions alone.</div>
+    <div class="dialogue-line"><span class="speaker">Lisa:</span> What about engineers? Will they become unnecessary if computers design everything automatically?</div>
+    <div class="dialogue-line"><span class="speaker">Ronald:</span> Engineers will focus on bigger creative problems while software will handle repetitive designs.</div>
+    <div class="dialogue-line"><span class="speaker">Lisa:</span> For example, my dad works as a mechanic, and I worry he might lose his job. Will mechanics still have employment opportunities once all cars are fully electric and automated?</div>
+    <div class="dialogue-line"><span class="speaker">Ronald:</span> Smart mechanics will adapt quickly and will repair high-tech components.</div>
+    <div class="dialogue-line"><span class="speaker">Lisa:</span> I like that. It will encourage people to perfect their skills. Experienced workers are in trouble, as traditional jobs won’t survive without major changes, and that terrifies me!</div>
+    <div class="dialogue-line"><span class="speaker">Ronald:</span> Technology will transform these roles, but it will create exciting new opportunities.</div>
+    <div class="dialogue-line"><span class="speaker">Lisa:</span> Will people feel secure about their future careers?</div>
+    <div class="dialogue-line"><span class="speaker">Ronald:</span> Continuous learning will guide us, and humanity will thrive alongside new technology!</div>
+    <div class="dialogue-line"><span class="speaker">Lisa:</span> I hope Artificial Intelligence won't make human skills completely obsolete!</div>
+    <div class="dialogue-line"><span class="speaker">Ronald:</span> Don't worry, Lisa. Human creativity and empathy will always remain essential.</div>
+  </div>
+
+  <!-- Quiz Card -->
+  <div class="quiz-card" id="quiz-form">
+    <!-- Q1 -->
+    <div class="question-block" data-qindex="1">
+      <div class="question-text">1. What is the main idea of the conversation?</div>
+      <div class="options-group">
+        <label class="option-label"><input type="radio" name="q1" value="A"> A. Artificial Intelligence will make most traditional jobs completely disappear in the near future.</label>
+        <label class="option-label"><input type="radio" name="q1" value="B"> B. Technology will transform job roles, but human skills and creativity will remain essential.</label>
+        <label class="option-label"><input type="radio" name="q1" value="C"> C. Robots and computers are taking over specialized professions like medicine and engineering.</label>
+        <label class="option-label"><input type="radio" name="q1" value="D"> D. Continuous learning is no longer useful because automated software designs everything.</label>
+      </div>
+      <div class="justification-box" id="just-1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" data-qindex="2">
+      <div class="question-text">2. In the sentence, "Experienced workers are in trouble, as traditional jobs won’t survive without major changes, and that terrifies me!", what does the word "terrifies" mean?</div>
+      <div class="options-group">
+        <label class="option-label"><input type="radio" name="q2" value="A"> A. Excites greatly</label>
+        <label class="option-label"><input type="radio" name="q2" value="B"> B. Frightens deeply</label>
+        <label class="option-label"><input type="radio" name="q2" value="C"> C. Confuses completely</label>
+        <label class="option-label"><input type="radio" name="q2" value="D"> D. Satisfies fully</label>
+      </div>
+      <div class="justification-box" id="just-2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" data-qindex="3">
+      <div class="question-text">3. What does the expression "won't vanish" mean when Ronald says, "human teachers won't vanish; they will use AI tools to teach better"?</div>
+      <div class="options-group">
+        <label class="option-label"><input type="radio" name="q3" value="A"> A. Will not disappear</label>
+        <label class="option-label"><input type="radio" name="q3" value="B"> B. Will not improve</label>
+        <label class="option-label"><input type="radio" name="q3" value="C"> C. Will not work</label>
+        <label class="option-label"><input type="radio" name="q3" value="D"> D. Will not adapt</label>
+      </div>
+      <div class="justification-box" id="just-3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" data-qindex="4">
+      <div class="question-text">4. According to Ronald, how will advanced robots interact with doctors in the medical field?</div>
+      <div class="options-group">
+        <label class="option-label"><input type="radio" name="q4" value="A"> A. They will take over all surgeries and make medical decisions independently.</label>
+        <label class="option-label"><input type="radio" name="q4" value="B"> B. They will replace doctors entirely in hospitals and clinics.</label>
+        <label class="option-label"><input type="radio" name="q4" value="C"> C. They will assist doctors, but they will not make medical decisions alone.</label>
+        <label class="option-label"><input type="radio" name="q4" value="D"> D. They will perform administrative tasks while doctors handle all surgeries.</label>
+      </div>
+      <div class="justification-box" id="just-4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-block" data-qindex="5">
+      <div class="question-text">5. How will engineers adapt to automated computer designs?</div>
+      <div class="options-group">
+        <label class="option-label"><input type="radio" name="q5" value="A"> A. They will focus exclusively on repairing high-tech machinery.</label>
+        <label class="option-label"><input type="radio" name="q5" value="B"> B. They will handle repetitive design tasks while software works on creative problems.</label>
+        <label class="option-label"><input type="radio" name="q5" value="C"> C. They will retire because software will design everything automatically.</label>
+        <label class="option-label"><input type="radio" name="q5" value="D"> D. They will focus on bigger creative problems while software handles repetitive tasks.</label>
+      </div>
+      <div class="justification-box" id="just-5"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-block" data-qindex="6">
+      <div class="question-text">6. What can be inferred about Ronald's perspective on the future of human workers?</div>
+      <div class="options-group">
+        <label class="option-label"><input type="radio" name="q6" value="A"> A. He believes humans should resist technological growth to protect traditional jobs.</label>
+        <label class="option-label"><input type="radio" name="q6" value="B"> B. He is confident that adaptation, continuous learning, and uniquely human traits will ensure human success.</label>
+        <label class="option-label"><input type="radio" name="q6" value="C"> C. He thinks human workers will eventually be replaced once technology becomes cheap enough.</label>
+        <label class="option-label"><input type="radio" name="q6" value="D"> D. He worries that workers without university degrees will be left behind completely.</label>
+      </div>
+      <div class="justification-box" id="just-6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-block" data-qindex="7">
+      <div class="question-text">7. Which of the following statements is FALSE according to the dialogue?</div>
+      <div class="options-group">
+        <label class="option-label"><input type="radio" name="q7" value="A"> A. Smart mechanics will adapt quickly to repair high-tech components.</label>
+        <label class="option-label"><input type="radio" name="q7" value="B"> B. Software will handle repetitive designs for engineers.</label>
+        <label class="option-label"><input type="radio" name="q7" value="C"> C. Human teachers will be replaced by AI in classrooms.</label>
+        <label class="option-label"><input type="radio" name="q7" value="D"> D. Advanced robots will assist doctors rather than work completely alone.</label>
+      </div>
+      <div class="justification-box" id="just-7"></div>
+    </div>
+
+  </div>
+
+  <!-- Action Bar -->
+  <div class="action-bar">
+    <button class="btn btn-primary" id="check-btn">✔ Check Answers</button>
+    <button class="btn btn-secondary" id="reset-btn">🔄 Try Again</button>
+    <button class="btn btn-success" id="download-btn">📥 Download Report</button>
+  </div>
+</div>
+
+<!-- Modal Results -->
+<div class="results-modal" id="results-modal">
+  <div class="results-content">
+    <h2>Activity Completed!</h2>
+    <div class="score-badge" id="score-display">[0/7]</div>
+    <p class="motivation-msg" id="motivation-display"></p>
+    <button class="btn btn-primary" style="margin: 0 auto;" onclick="closeModal()">Close & Review Answers</button>
+  </div>
+</div>
+
+<script>
+  // Student Database
+  const studentsData = {
+    "6° Básico A": [
+      "ARELLANO CORTÉS VALENTÍN ALONSO", "BUSTOS QUEZADA FELIPE ALONSO", "CALDERÓN LEZCANO ISIDORA MARTINA", "CARO ORELLANA AGUSTINA ANTONIA", "CÉSPEDES SÁNCHEZ JOSEFINA IGNACIA", "CUEVAS MAHN IGNACIO ALEJANDRO", "DÍAZ GUTIÉRREZ TOMÁS ALONSO", "DÍAZ MEDEL VIOLETA EMILIANA", "DÍAZ TORO ALBERTO ALEJANDRO", "ESCOBEDO DE LA FUENTE VALENTINA ANDREA", "GILCHRIST VALDÉS ALEXANDER NEDJELJKO", "GÓMEZ GALLARDO TERESITA EMILIA", "GÓMEZ ZÚÑIGA JOSÉ IGNACIO", "GUERRERO MORENO GABRIEL", "GUTIÉRREZ PACHECO ANTONIA CAROLINA", "GUZMÁN MINA CATALINA PAZ", "GUZMÁN ZAMORA JOSÉ TOMÁS", "HONTAVILLA ROGAZY CATALINA FERNANDA", "MANRÍQUEZ CATALÁN MARIANA IGNACIA", "OJEDA ESTEVEZ VICTORIA ANTONELLA", "OPAZO CABEZAS EMILIA ALOISE", "OSORIO BERRIOS GASTÓN ALONSO VITAL", "PEÑAS SOTO SANTIAGO RAFAEL", "PINTO CASTRO MATEO IGNACIO", "POZO URETA CRISTÓBAL VALENTÍN", "PRADENA PEREDO ANTONIA HELENA", "RAMÍREZ ESPINOZA DIEGO JOAQUÍN", "RIVEROS ALVAREZ FRANCISCA ANDREA", "RODRÍGUEZ MERCADO GUSTAVO VENTURA", "VALENZUELA CANALES MARTINA PASCALE", "VÁSQUEZ CONTRERAS MARÍA FERNANDA", "VERA RUIZ MATILDE IGNACIA", "VILLAR RAULD NICOLÁS AGUSTÍN", "VILLEGAS LLANCO JUAN IGNACIO", "YÁÑEZ ESPINOZA DIEGO ANTONIO"
+    ],
+    "6° Básico B": [
+      "ARAVENA RUZ VICENTE ALEJANDRO", "ARÍSTEGUI PARRAGUEZ PASCALE AURORA", "BLANCO VERA GABRIEL ADOLFO", "BRITO JOFRÉ EMILIA JOSEFINA", "BRUNET CUELLAR SEBASTIÁN ARIEL", "CERPA CARRILLO EMILIA JESÚS", "FUENZALIDA PARRA VIOLETA", "GONZÁLEZ VERGARA IGNACIO ANTONIO", "GORNALL ALARCON RAYEN ELUNEY", "LABRAÑA BARRERA AMANDA LOURDES", "LEÓN DÁVILA TOMÁS IGNACIO", "LEÓN SAAVEDRA NICOLE VICTORIA", "LILLO SALDAÑA FRANCISCA SOFÍA", "LOYOLA HERRERA JOSEFA IGNACIA", "MAHNCKE MONSALVE IGNACIO ANTONIO", "MALDONADO SEGOVIA SANTIAGO AGUSTÍN", "MENA BRAVO RAÚL ALBERTO", "MORENO BRACAMONTE MARCO ALEJANDRO", "MOYA MADERO JOSEFINA EMILIA", "NOVA ACEVEDO MARTINA IGNACIA", "OLIVARES CATRO JOSEFINA PAZ", "ORTIZ DONOSO SIMONA IGNACIA", "PÉREZ GONZÁLEZ ALONSO SEBASTIÁN", "POVEDA SERRANO PABLO SALVADOR", "RAMÍREZ LÓPEZ JOSÉ MIGUEL", "REBOLLO FUENTES BENJAMÍN IGNACIO", "RIESCO MENDOZA TOMAS FELIPE", "RUBIO ROSAS JULIÁN ALEJANDRO", "SMOK RODRÍGUEZ LAURA VICTORIA", "SOTO GONZÁLEZ JOSEFA IGNACIA", "VENEGAS ARANCIBIA DIEGO TOMÁS", "VERDEJO GALLEGUILLOS BENJAMÍN TOMÁS ANTONIO", "VIDAL TORRES GONZALO ANTONIO", "VILLALOBOS GUEVARA JULIÁN ERNESTO", "YÁÑEZ LÓPEZ FERNANDA SOFÍA", "VILLAGRA ALARCÓN ANITA CAROLINA"
+    ],
+    "6° Básico C": [
+      "ABURTO ROMERO PABLO IGNACIO", "ACEVEDO GARRIDO ANAHÍ", "APIOLAZA SCACCHI TOMÁS ANDRÉS", "ARBURO LEÓN BRUNO AUGUSTO", "BAHAMONDES CÁCERES CAMILA MAGDALENA", "CABAÑAS GUIMPERT DAMIÁN", "CÁCERES MUÑOZ LAURA SOFÍA", "CALDERÓN ZAMORA FACUNDO", "CORREA PIÑA RENATA IGNACIA", "CUEVAS VIVALLO AMANDA SOFÍA", "DELGADO OLIVA CATALINA HELENA", "DÍAZ ARAGÓN GONZALO ANDRÉS", "DÍAZ PÉREZ ROCÍO VICTORIA", "FAJARDO GALLEGOS SEBASTIÁN IGNACIO", "LABRA MERIÑO SEBASTIÁN GABRIEL", "MARCHANT CARRANCIO PÍA CAROLINA", "MARCHANT ESCANDOR ISABELLA", "MOLINEAUX CEPEDA LEONOR VIOLETA", "MUÑOZ NORAMBUENA JOAQUÍN EDUARDO", "OLIVA RODRÍGUEZ MARTINA BELÉN", "OLIVARES CASTILLO FRANCISCA FERNANDA", "OLIVARES SÁNCHEZ RAÚL ALONSO", "PEÑA MARTÍN CAROLINA", "REYGADAS MUÑOZ MÁXIMO VALENTINO", "RIFFO FERNÁNDEZ VALENTÍN", "RODRÍGUEZ YÁÑEZ BEATRIZ AMALIA", "RUIZ URZÚA CLEMENTE ALONSO", "RUTHERFORD RUTHERFORD MARÍA GRACIA", "SALINAS ZAMORANO VICENTE RAFAEL", "SILVA MANRÍQUEZ GASPAR SALVADOR", "TRUJILLO PINTO ALONSO ANDRÉS", "URZÚA LAROZE FRANCISCO JAVIER", "VARGAS URRUTIA AMANDA IGNACIA", "VALIENTE NÚÑEZ MARÍA PAZ", "VELASCO BARCELÓ GASPAR ANTÜ", "WALKER TORRES SALVADOR", "ZÚÑIGA ARAVENA JOAQUÍN ALONSO"
+    ]
+  };
+
+  // Quiz Solutions Data & Justifications
+  const quizAnswers = {
+    q1: {
+      correct: "B",
+      type: "Main Idea",
+      explanation: "Throughout the dialogue, Lisa expresses anxiety about workers being replaced, while Ronald consistently reassures her that AI will transform roles and assist workers rather than replace them, emphasizing that human creativity and empathy remain essential.",
+      ref: "Technology will transform these roles, but it will create exciting new opportunities."
+    },
+    q2: {
+      correct: "B",
+      type: "Vocabulary in Context",
+      explanation: "In this context, 'terrifies' describes Lisa's deep fear and worry regarding traditional jobs not surviving without major changes.",
+      ref: "Experienced workers are in trouble, as traditional jobs won’t survive without major changes, and that terrifies me!"
+    },
+    q3: {
+      correct: "A",
+      type: "Vocabulary/Expression in Context",
+      explanation: "To 'vanish' means to disappear. Saying teachers 'won't vanish' means they will continue to exist in classrooms, utilizing AI tools rather than being replaced.",
+      ref: "No, human teachers won't vanish; they will use AI tools to teach better."
+    },
+    q4: {
+      correct: "C",
+      type: "Factual Information",
+      explanation: "Ronald explicitly states that while advanced robots will help doctors, they will not make medical decisions on their own.",
+      ref: "Advanced robots will assist doctors, but they won't make medical decisions alone."
+    },
+    q5: {
+      correct: "D",
+      type: "Factual Information",
+      explanation: "The dialogue states that software will take over repetitive tasks, allowing engineers to dedicate their efforts to complex, creative problem-solving.",
+      ref: "Engineers will focus on bigger creative problems while software will handle repetitive designs."
+    },
+    q6: {
+      correct: "B",
+      type: "Inference Skills",
+      explanation: "Although Ronald acknowledges that jobs will change, his repeated emphasis on adaptation, continuous learning, and essential human qualities demonstrates an optimistic belief in human resilience.",
+      ref: "Continuous learning will guide us, and humanity will thrive alongside new technology!"
+    },
+    q7: {
+      correct: "C",
+      type: "False Detail",
+      explanation: "Statement C is explicitly contradicted by the dialogue. Option A is true, Option B is true, and Option D is true.",
+      ref: "Lisa: Do you think AI will replace teachers...? / Ronald: No, human teachers won't vanish..."
+    }
+  };
+
+  let timerInterval = null;
+  let secondsElapsed = 0;
+  let isTimerRunning = false;
+
+  // DOM Elements
+  const playBtn = document.getElementById("play-btn");
+  const pauseBtn = document.getElementById("pause-btn");
+  const repeatBtn = document.getElementById("repeat-btn");
+  const htmlAudio = document.getElementById("html-audio");
+  const audioStatus = document.getElementById("audio-status");
+  const timerDisplay = document.getElementById("timer");
+  const dateInput = document.getElementById("activity-date");
+  const courseSelect = document.getElementById("student-course");
+  const nameSelect = document.getElementById("student-name");
+  const speedBtns = document.querySelectorAll(".speed-btn");
+
+  // Set Today's Date
+  dateInput.valueAsDate = new Date();
+
+  // Populate Student Dropdown dynamically
+  courseSelect.addEventListener("change", () => {
+    const selectedCourse = courseSelect.value;
+    nameSelect.innerHTML = "";
+
+    if (selectedCourse && studentsData[selectedCourse]) {
+      nameSelect.disabled = false;
+      const defaultOpt = document.createElement("option");
+      defaultOpt.value = "";
+      defaultOpt.textContent = "-- Selecciona Estudiante --";
+      nameSelect.appendChild(defaultOpt);
+
+      studentsData[selectedCourse].forEach(student => {
+        const opt = document.createElement("option");
+        opt.value = student;
+        opt.textContent = student;
+        nameSelect.appendChild(opt);
+      });
+    } else {
+      nameSelect.disabled = true;
+      const defaultOpt = document.createElement("option");
+      defaultOpt.value = "";
+      defaultOpt.textContent = "-- Primero selecciona curso --";
+      nameSelect.appendChild(defaultOpt);
+    }
+  });
+
+  // Timer Controls
+  function startTimer() {
+    if (!isTimerRunning) {
+      isTimerRunning = true;
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+        const secs = String(secondsElapsed % 60).padStart(2, '0');
+        timerDisplay.textContent = `Time: ${mins}:${secs}`;
+      }, 1000);
+    }
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+  }
+
+  function resetTimer() {
+    stopTimer();
+    secondsElapsed = 0;
+    timerDisplay.textContent = "Time: 00:00";
+  }
+
+  // Audio Playback Controls
+  playBtn.addEventListener("click", () => {
+    startTimer();
+    htmlAudio.play().then(() => {
+      audioStatus.textContent = "Playing dialogue...";
+    }).catch(() => {
+      audioStatus.textContent = `Error al reproducir '${htmlAudio.getAttribute("src")}'`;
+    });
+  });
+
+  pauseBtn.addEventListener("click", () => {
+    htmlAudio.pause();
+    audioStatus.textContent = "Paused";
+  });
+
+  repeatBtn.addEventListener("click", () => {
+    startTimer();
+    htmlAudio.currentTime = 0;
+    htmlAudio.play().then(() => {
+      audioStatus.textContent = "Replaying dialogue...";
+    }).catch(() => {
+      audioStatus.textContent = `Error al reproducir '${htmlAudio.getAttribute("src")}'`;
+    });
+  });
+
+  speedBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const speed = parseFloat(btn.dataset.speed);
+      htmlAudio.playbackRate = speed;
+      speedBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  // Track activity start when clicking quiz radio inputs
+  document.querySelectorAll('.option-label input').forEach(input => {
+    input.addEventListener('change', startTimer);
+  });
+
+  // Check Quiz Answers and Display Justifications
+  document.getElementById("check-btn").addEventListener("click", () => {
+    stopTimer();
+    let score = 0;
+    const total = Object.keys(quizAnswers).length;
+
+    Object.keys(quizAnswers).forEach((qKey, index) => {
+      const qIndex = index + 1;
+      const selectedOption = document.querySelector(`input[name="${qKey}"]:checked`);
+      const justBox = document.getElementById(`just-${qIndex}`);
+      const correctVal = quizAnswers[qKey].correct;
+      const explanation = quizAnswers[qKey].explanation;
+      const ref = quizAnswers[qKey].ref;
+
+      justBox.classList.remove("correct", "incorrect", "visible");
+
+      if (selectedOption) {
+        const userVal = selectedOption.value;
+        if (userVal === correctVal) {
+          score++;
+          justBox.classList.add("correct", "visible");
+          justBox.innerHTML = `<strong>✔ Correct! (Option ${correctVal})</strong><br>${explanation}<br><em>Reference: "${ref}"</em>`;
+        } else {
+          justBox.classList.add("incorrect", "visible");
+          justBox.innerHTML = `<strong>✖ Incorrect. (Correct Answer: ${correctVal})</strong><br>${explanation}<br><em>Reference: "${ref}"</em>`;
+        }
+      } else {
+        justBox.classList.add("incorrect", "visible");
+        justBox.innerHTML = `<strong>⚠ Not Answered. (Correct Answer: ${correctVal})</strong><br>${explanation}<br><em>Reference: "${ref}"</em>`;
+      }
+    });
+
+    showResults(score, total);
+  });
+
+  function showResults(score, total) {
+    const scoreDisplay = document.getElementById("score-display");
+    const motivationDisplay = document.getElementById("motivation-display");
+
+    scoreDisplay.textContent = `[${score}/${total}]`;
+
+    if (score === total) {
+      motivationDisplay.textContent = "🎉 Exceptional work! Perfect score! Your reading and listening comprehension skills are outstanding!";
+    } else if (score >= 5) {
+      motivationDisplay.textContent = "🌟 Great job! You understood the key concepts and details very well!";
+    } else if (score >= 3) {
+      motivationDisplay.textContent = "👍 Good attempt! Review the justifications below to understand the dialogue better.";
+    } else {
+      motivationDisplay.textContent = "💪 Keep practicing! Read through the dialogue and replay the audio to improve your score.";
+    }
+
+    document.getElementById("results-modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("results-modal").style.display = "none";
+  }
+
+  // Reset Quiz
+  document.getElementById("reset-btn").addEventListener("click", () => {
+    resetTimer();
+    document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+    document.querySelectorAll('.justification-box').forEach(box => {
+      box.classList.remove("correct", "incorrect", "visible");
+      box.innerHTML = "";
+    });
+  });
+
+  // Download Student Report
+  document.getElementById("download-btn").addEventListener("click", () => {
+    const studentCourse = courseSelect.value;
+    const studentName = nameSelect.value;
+
+    if (!studentCourse || !studentName) {
+      alert("⚠️ Debes seleccionar tu Curso y Nombre de estudiante de la lista antes de poder descargar el informe.");
+      return;
+    }
+
+    const date = dateInput.value || "N/A";
+    const timeSpent = timerDisplay.textContent.replace("Time: ", "");
+
+    let correctCount = 0;
+    let details = "";
+    const total = Object.keys(quizAnswers).length;
+
+    Object.keys(quizAnswers).forEach((qKey, idx) => {
+      const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+      const userVal = selected ? selected.value : "UNANSWERED";
+      const expected = quizAnswers[qKey].correct;
+      const isCorrect = userVal === expected;
+      if (isCorrect) correctCount++;
+
+      details += `Question #${idx + 1}: Student Answer = ${userVal} | Expected = ${expected} [${isCorrect ? 'CORRECT' : 'INCORRECT'}]\n`;
+    });
+
+    const reportContent = `================================================
+COLEGIO SAN IGNACIO
+READING COMPREHENSION REPORT: FUTURE JOBS & AI
+================================================
+Estudiante    : ${studentName}
+Curso / Grade : ${studentCourse}
+Fecha         : ${date}
+Tiempo Usado  : ${timeSpent}
+Puntaje       : ${correctCount} / ${total} (${Math.round((correctCount / total) * 100)}%)
+================================================
+
+QUESTION BREAKDOWN:
+------------------------------------------------
+${details}
+================================================
+`;
+
+    const blob = new Blob([reportContent], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `Reporte_Quiz_${studentName.replace(/\s+/g, '_')}_${studentCourse.replace(/\s+/g, '_')}.txt`;
+    link.click();
+  });
+</script>
+
+</body>
+</html>
